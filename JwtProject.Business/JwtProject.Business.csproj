@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JWTProject.DataAccess\JWTProject.DataAccess.csproj" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Concrete\" />
+    <ProjectReference Include="..\JWTProject.DataAccess\JWTProject.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
