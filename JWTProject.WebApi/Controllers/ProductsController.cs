@@ -5,6 +5,7 @@ using JWTProject.WebApi.CustomFilters;
 using JWTProject.Entities.DTOs.ProductDtos;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace JWTProject.WebApi.Controllers
 {
@@ -63,6 +64,13 @@ namespace JWTProject.WebApi.Controllers
         {
             await _productService.Remove(new Product() { Id = id });
             return NoContent();
+        }
+
+        [Route("/error")]
+        public IActionResult Error()
+        {
+            var errorInfo = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            return Problem(detail: "Api da bir hata oluştu, en kısa zamanda düzeltilecek");
         }
     }
 }
