@@ -4,8 +4,8 @@ using JWTProject.Entities.Concrete;
 using JWTProject.WebApi.CustomFilters;
 using JWTProject.Entities.DTOs.ProductDtos;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
 using Microsoft.AspNetCore.Diagnostics;
+using AutoMapper;
 
 namespace JWTProject.WebApi.Controllers
 {
@@ -70,6 +70,7 @@ namespace JWTProject.WebApi.Controllers
         public IActionResult Error()
         {
             var errorInfo = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
             return Problem(detail: "Api da bir hata oluştu, en kısa zamanda düzeltilecek");
         }
     }

@@ -4,6 +4,7 @@ using JwtProject.Business.Interfaces;
 using JwtProject.Business.ValidationRules.FluentValidation;
 using JWTProject.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using JWTProject.DataAccess.Interfaces;
+using JWTProject.Entities.DTOs.AppUserDtos;
 using JWTProject.Entities.DTOs.ProductDtos;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,9 +31,11 @@ namespace JwtProject.Business.Containers.MicrosoftIoc
             services.AddScoped<IAppUserRoleDal, EfAppUserRoleRepository>();
             services.AddScoped<IAppUserRoleService, AppUserRoleManager>();
 
+            services.AddScoped<IJwtService, JwtManager>();
             /* fluent validation */
             services.AddTransient<IValidator<ProductAddDto>, ProductAddValidator>();
             services.AddTransient<IValidator<ProductUpdateDto>, ProductUpdateValidator>();
+            services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginValidator>();
 
         }
     }

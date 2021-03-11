@@ -1,11 +1,16 @@
 using FluentValidation.AspNetCore;
 using JwtProject.Business.Containers.MicrosoftIoc;
+using JwtProject.Business.StringInfos;
 using JWTProject.WebApi.CustomFilters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 
 namespace JWTProject.WebApi
 {
@@ -22,7 +27,21 @@ namespace JWTProject.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDependencies();
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped(typeof(ValidId<>));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = JWTInfo.Issuer,
+                    ValidAudience = JWTInfo.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTInfo.SecurityKey)),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew=TimeSpan.Zero
+                };
+            });
             services.AddControllers().AddFluentValidation();
         }
 
