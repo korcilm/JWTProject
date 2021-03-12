@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+ 
 namespace JwtProject.Business.Concrete
 {
     public class JwtManager :IJwtService

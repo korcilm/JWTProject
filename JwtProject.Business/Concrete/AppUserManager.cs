@@ -27,5 +27,10 @@ namespace JwtProject.Business.Concrete
         {
             return await _appUserDal.GetByFilter(I => I.UserName == userName);
         }
+
+        public async Task<List<AppRole>> GetRolesByUserName(string userName)
+        {
+            return await _appUserDal.GetRolesByUserName(userName);
+        }
     }
 }

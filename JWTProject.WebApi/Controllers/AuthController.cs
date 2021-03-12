@@ -15,17 +15,31 @@ namespace JWTProject.WebApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IJwtService _jwtService;
-
-        public AuthController(IJwtService jwtService)
+        private readonly IAppUserService _appUserService;
+        public AuthController(IJwtService jwtService, IAppUserService appUserService)
         {
             _jwtService = jwtService;
+            _appUserService = appUserService;
         }
 
         [HttpGet("[action]")]
         [ValidModel]
-        public IActionResult SignIn(AppUserLoginDto userLoginDto)
+        public async Task<IActionResult> SignIn(AppUserLoginDto userLoginDto)
         {
-            return Created("", "");
+            var appUser = await _appUserService.FindByUserName(userLoginDto.UserName);
+            if (appUser == null)
+            {
+                return BadRequest("Kullanıcı adı veya şifre hatalı");
+            }
+            else
+            {
+                if (await _appUserService.CheckPassword(userLoginDto))
+                {
+                    var token = _jwtService.GenerateJwt(appUser, null);
+                    return Created("", token);
+                }
+                return BadRequest("Kullanıcı adı veya şifre hatalı");
+            }
         }
     }
 }
