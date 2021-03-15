@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using JwtProject.Business.Containers.MicrosoftIoc;
+using JwtProject.Business.Interfaces;
 using JwtProject.Business.StringInfos;
 using JWTProject.WebApi.CustomFilters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -46,13 +47,15 @@ namespace JWTProject.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IAppUserService appUserService, IAppUserRoleService appUserRoleService, IAppRoleService appRoleService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseExceptionHandler("/Error");
+            JwtIdentityInitializer.Seed(appUserService, appUserRoleService, appRoleService).Wait();
             app.UseRouting();
 
             app.UseAuthorization();

@@ -30,8 +30,8 @@ namespace JwtProject.Business.Concrete
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, appUser.UserName));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()));
-
-            if (roles.Count > 0)
+            //if (roles != null){}   =   roles?
+            if (roles?.Count > 0)
             {
                 foreach (var role in roles)
                 {

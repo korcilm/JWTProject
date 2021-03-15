@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JWTProject.Entities.Concrete;
+using JWTProject.Entities.DTOs.AppUserDtos;
 using JWTProject.Entities.DTOs.ProductDtos;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace JWTProject.WebApi.Mapping.AutoMapperProfile
         {
             CreateMap<ProductAddDto, Product>().ReverseMap();
             CreateMap<ProductUpdateDto, Product>().ReverseMap();
+            CreateMap<AppUser, AppUserAddDto>().ReverseMap();
         }
     }
 }
