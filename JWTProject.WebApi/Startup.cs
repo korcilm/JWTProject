@@ -57,13 +57,13 @@ namespace JWTProject.WebApi
             app.UseExceptionHandler("/Error");
             JwtIdentityInitializer.Seed(appUserService, appUserRoleService, appRoleService).Wait();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            }); 
         }
     }
 }
